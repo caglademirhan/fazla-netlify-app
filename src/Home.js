@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaHeart } from 'react-icons/fa';
-import { useECommerce } from './ECommerceContext';
+import { FaHeart, FaShoppingCart } from 'react-icons/fa'; // Import the icons
+import { useECommerce } from './ECommerceContext'; // Import the Context hook
 
 function Home() {
-    const [products, setProducts] = useState([]);
-    const { state: { favorites }, addToFavorites, removeFromFavorites } = useECommerce();
+  const { addToFavorites, removeFromFavorites, addToCart, removeFromCart } = useECommerce();
+  const { favorites, cart } = useECommerce().state;
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('https://dummyjson.com/products')
+    // Fetch data from the API
+    axios.get('https://dummyjson.com/products') // Update the URL here
       .then((response) => {
-        setProducts(response.data.products);
+        setProducts(response.data.products); // Access the 'products' property in the response data
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
-
-  // Function to toggle favoriting a product
-  const toggleFavorite = (product) => {
-    if (favorites.some((item) => item.id === product.id)) {
-      removeFromFavorites(product);
-    } else {
-      addToFavorites(product);
-    }
-  };
 
   return (
     <div className="home" style={{ textAlign: 'center', padding: '20px' }}>
@@ -48,11 +41,15 @@ function Home() {
                 position: 'absolute',
                 top: '10px',
                 right: '10px',
-                color: 'red', // Set the initial color to red
+                color: favorites.some((item) => item.id === product.id) ? 'red' : 'gray',
                 fontSize: '24px',
                 cursor: 'pointer',
               }}
-              onClick={() => toggleFavorite(product)} // Call the toggleFavorite function
+              onClick={() =>
+                favorites.some((item) => item.id === product.id)
+                  ? removeFromFavorites(product)
+                  : addToFavorites(product)
+              }
             />
             {/* Image */}
             <div style={{ height: '200px', overflow: 'hidden', marginBottom: '10px' }}>
@@ -63,6 +60,19 @@ function Home() {
               <h2 style={{ fontSize: '1.2rem', margin: '10px 0' }}>{product.title}</h2>
               <p style={{ fontSize: '1rem', flex: 1 }}>{product.description}</p>
               <p className="price" style={{ fontWeight: 'bold', color: '#007bff', margin: '10px 0' }}>${product.price}</p>
+              {/* Shopping Cart Icon and Button */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <button
+                  onClick={() => (cart.some((item) => item.id === product.id) ? removeFromCart(product) : addToCart(product))}
+                  style={{ backgroundColor: cart.some((item) => item.id === product.id) ? 'red' : 'gray', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                >
+                  {cart.some((item) => item.id === product.id) ? 'Remove from Cart' : 'Add to Cart'}
+                </button>
+                <FaShoppingCart
+                  style={{ color: cart.some((item) => item.id === product.id) ? 'red' : 'gray', fontSize: '24px', cursor: 'pointer' }}
+                  onClick={() => (cart.some((item) => item.id === product.id) ? removeFromCart(product) : addToCart(product))}
+                />
+              </div>
             </div>
           </div>
         ))}
@@ -72,3 +82,4 @@ function Home() {
 }
 
 export default Home;
+
