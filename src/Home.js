@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaHeart, FaShoppingCart } from 'react-icons/fa'; // Import the icons
-import { useECommerce } from './ECommerceContext'; // Import the Context hook
+import { FaHeart, FaShoppingCart } from 'react-icons/fa';
+import { useECommerce } from './ECommerceContext';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Home() {
   const { addToFavorites, removeFromFavorites, addToCart, removeFromCart } = useECommerce();
@@ -10,9 +11,9 @@ function Home() {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get('https://dummyjson.com/products') // Update the URL here
+    axios.get('https://dummyjson.com/products')
       .then((response) => {
-        setProducts(response.data.products); // Access the 'products' property in the response data
+        setProducts(response.data.products);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -24,18 +25,21 @@ function Home() {
       <h1>Products</h1>
       <div className="product-list" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
         {products.map((product) => (
-          <div className="product-card" key={product.id} style={{
-            border: '1px solid #ccc',
-            padding: '10px',
-            margin: '10px',
-            width: '250px',
-            backgroundColor: '#fff',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'relative',
-          }}>
-            {/* Heart Icon */}
+          <div
+            className="product-card"
+            key={product.id}
+            style={{
+              border: '1px solid #ccc',
+              padding: '10px',
+              margin: '10px',
+              width: '250px',
+              backgroundColor: '#fff',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+            }}
+          >
             <FaHeart
               style={{
                 position: 'absolute',
@@ -51,16 +55,17 @@ function Home() {
                   : addToFavorites(product)
               }
             />
-            {/* Image */}
             <div style={{ height: '200px', overflow: 'hidden', marginBottom: '10px' }}>
               <img src={product.images[0]} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            {/* Product Info */}
             <div style={{ padding: '10px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-              <h2 style={{ fontSize: '1.2rem', margin: '10px 0' }}>{product.title}</h2>
+              <h2 style={{ fontSize: '1.2rem', margin: '10px 0' }}>
+                <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  {product.title}
+                </Link>
+              </h2>
               <p style={{ fontSize: '1rem', flex: 1 }}>{product.description}</p>
               <p className="price" style={{ fontWeight: 'bold', color: '#007bff', margin: '10px 0' }}>${product.price}</p>
-              {/* Shopping Cart Icon and Button */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <button
                   onClick={() => (cart.some((item) => item.id === product.id) ? removeFromCart(product) : addToCart(product))}
@@ -82,4 +87,7 @@ function Home() {
 }
 
 export default Home;
+
+
+
 
