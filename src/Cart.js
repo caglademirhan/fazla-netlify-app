@@ -70,7 +70,7 @@ function Cart() {
           </div>
         ))}
       </div>
-      <div className="cart-subtotal" style={{ backgroundColor: '#e0f2e9', padding: '20px', marginTop: '20px' }}>
+      <div className="cart-subtotal" style={{ backgroundColor: 'orange', padding: '20px', marginTop: '20px' }}>
         <p style={{ fontWeight: 'bold' }}>Subtotal:</p>
         <p>Total: ${calculateTotalPrice().toFixed(2)}</p>
       </div>

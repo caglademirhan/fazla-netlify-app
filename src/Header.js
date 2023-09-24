@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaHeart, FaShoppingCart, FaStore } from 'react-icons/fa'; // Import icons from react-icons library
 import { FiSun, FiMoon } from 'react-icons/fi'; // Import icons for light/dark mode
 
@@ -10,26 +10,31 @@ function Header() {
   // Function to toggle between light and dark modes
   const toggleTheme = () => {
     setDarkMode(!isDarkMode);
-    // Add logic here to switch your application's theme (CSS classes, etc.)
+   
   };
+
+  // Get the current route location
+  const location = useLocation();
 
   return (
     <header style={headerStyle}>
       <div style={leftContainerStyle}>
-        <div style={logoStyle}>
-          <FaStore size={32} /> {/* Replace with your preferred store icon */}
-        </div>
+        {/* Wrap the logo with a Link component */}
+        <Link to="/" style={logoLinkStyle}>
+          <FaStore size={32} /> {/*  */}
+          <span style={logoTextStyle}> FAZLA-STORE </span>
+        </Link>
       </div>
       <div style={rightContainerStyle}>
         <nav style={navStyle}>
           {/* Add other navigation links as needed */}
-          <Link to="/favorites" style={linkStyle}>
+          <Link to="/favorites" style={{ ...linkStyle, ...(location.pathname === '/favorites' && activeTabStyle) }}>
             Favorites <FaHeart />
           </Link>
-          <Link to="/cart" style={linkStyle}>
+          <Link to="/cart" style={{ ...linkStyle, ...(location.pathname === '/cart' && activeTabStyle) }}>
             Cart <FaShoppingCart />
           </Link>
-          <Link to="/" style={linkStyle}>
+          <Link to="/" style={{ ...linkStyle, ...(location.pathname === '/' && activeTabStyle) }}>
             Home <FaHome />
           </Link>
         </nav>
@@ -57,8 +62,22 @@ const leftContainerStyle = {
   alignItems: 'center',
 };
 
+// Add logoLinkStyle for the logo link
+const logoLinkStyle = {
+  textDecoration: 'none',
+  color: 'white',
+  display: 'flex',
+  alignItems: 'center',
+};
+
 const logoStyle = {
   fontSize: '32px',
+};
+
+const logoTextStyle = {
+  marginLeft: '10px', 
+  fontWeight: 'bold', 
+  color: 'orange',
 };
 
 const rightContainerStyle = {
@@ -88,6 +107,15 @@ const themeButtonStyle = {
   alignItems: 'center',
 };
 
+// Style for the active tab
+const activeTabStyle = {
+  color: 'orange', // Change the color as desired
+  fontWeight: 'bold', // Add other styling for active tab
+};
+
 export default Header;
+
+
+
 
 
