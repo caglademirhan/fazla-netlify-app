@@ -1,60 +1,78 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaHeart, FaShoppingCart, FaStore } from 'react-icons/fa'; // Import icons from react-icons library
-import { FiSun, FiMoon } from 'react-icons/fi'; // Import icons for light/dark mode
+import { FaHome, FaHeart, FaShoppingCart, FaStore } from 'react-icons/fa';
+import { FiSun, FiMoon } from 'react-icons/fi';
+import { useTheme } from './ThemeContext'; // Import useTheme
 
 function Header() {
-  // State for managing the theme mode (light/dark)
-  const [isDarkMode, setDarkMode] = useState(false);
-
-  // Function to toggle between light and dark modes
-  const toggleTheme = () => {
-    setDarkMode(!isDarkMode);
-   
-  };
-
-  // Get the current route location
+  const { theme, toggleTheme } = useTheme(); // Get theme and toggleTheme from ThemeContext
   const location = useLocation();
 
   return (
-    <header style={headerStyle}>
+    <header
+      style={{
+        ...headerStyle,
+        backgroundColor: theme === 'dark' ? '#333' : '#fff',
+        color: theme === 'dark' ? '#fff' : '#000',
+      }}
+    >
       <div style={leftContainerStyle}>
-        {/* Wrap the logo with a Link component */}
         <Link to="/" style={logoLinkStyle}>
-          <FaStore size={32} /> {/*  */}
-          <span style={logoTextStyle}> FAZLA-STORE </span>
+          <FaStore size={32} />
+          <span
+            style={{
+              ...logoTextStyle,
+              color: theme === 'dark' ? '#F8B88B' : '#000',
+            }}
+          >
+            e-STORE
+          </span>
         </Link>
       </div>
       <div style={rightContainerStyle}>
         <nav style={navStyle}>
-          {/* Add other navigation links as needed */}
-          <Link to="/favorites" style={{ ...linkStyle, ...(location.pathname === '/favorites' && activeTabStyle) }}>
+          <Link
+            to="/favorites"
+            style={{
+              ...linkStyle,
+              ...(location.pathname === '/favorites' && activeTabStyle),
+            }}
+          >
             Favorites <FaHeart />
           </Link>
-          <Link to="/cart" style={{ ...linkStyle, ...(location.pathname === '/cart' && activeTabStyle) }}>
+          <Link
+            to="/cart"
+            style={{
+              ...linkStyle,
+              ...(location.pathname === '/cart' && activeTabStyle),
+            }}
+          >
             Cart <FaShoppingCart />
           </Link>
-          <Link to="/" style={{ ...linkStyle, ...(location.pathname === '/' && activeTabStyle) }}>
+          <Link
+            to="/"
+            style={{
+              ...linkStyle,
+              ...(location.pathname === '/' && activeTabStyle),
+            }}
+          >
             Home <FaHome />
           </Link>
         </nav>
         <button onClick={toggleTheme} style={themeButtonStyle}>
-          {isDarkMode ? <FiSun /> : <FiMoon />} {/* Toggle between sun and moon icons */}
-          {isDarkMode ? ' Light Mode' : ' Dark Mode'}
+          {theme === 'dark' ? <FiSun /> : <FiMoon />}
+          {theme === 'dark' ? ' Light Mode' : ' Dark Mode'}
         </button>
       </div>
     </header>
   );
 }
 
-// CSS Styles
 const headerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  backgroundColor: '#333',
   padding: '10px 20px',
-  color: 'white',
 };
 
 const leftContainerStyle = {
@@ -62,22 +80,16 @@ const leftContainerStyle = {
   alignItems: 'center',
 };
 
-// Add logoLinkStyle for the logo link
 const logoLinkStyle = {
   textDecoration: 'none',
-  color: 'white',
+  color: '#000',
   display: 'flex',
   alignItems: 'center',
 };
 
-const logoStyle = {
-  fontSize: '32px',
-};
-
 const logoTextStyle = {
-  marginLeft: '10px', 
-  fontWeight: 'bold', 
-  color: 'orange',
+  marginLeft: '10px',
+  fontWeight: 'bold',
 };
 
 const rightContainerStyle = {
@@ -92,7 +104,7 @@ const navStyle = {
 
 const linkStyle = {
   textDecoration: 'none',
-  color: 'white',
+  color: '#000',
   display: 'flex',
   alignItems: 'center',
 };
@@ -100,20 +112,21 @@ const linkStyle = {
 const themeButtonStyle = {
   backgroundColor: 'transparent',
   border: 'none',
-  color: 'white',
+  color: '#000',
   cursor: 'pointer',
   fontSize: '16px',
   display: 'flex',
   alignItems: 'center',
 };
 
-// Style for the active tab
 const activeTabStyle = {
-  color: 'orange', // Change the color as desired
-  fontWeight: 'bold', // Add other styling for active tab
+  color: '#F8B88B',
+  fontWeight: 'bold',
 };
 
 export default Header;
+
+
 
 
 
