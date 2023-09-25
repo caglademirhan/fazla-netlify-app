@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { useECommerce } from './ECommerceContext';
+import { useTheme } from './ThemeContext'; // Import useTheme from your ThemeContext
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { addToCart, addToFavorites, removeFromFavorites, state } = useECommerce(); // Add this line
+  const { theme } = useTheme(); // Get the current theme from ThemeContext
 
   useEffect(() => {
     axios
@@ -51,20 +53,37 @@ function ProductDetails() {
 
   const isFavorite = state.favorites.some((item) => item.id === product.id);
 
+  const containerStyle = {
+    width: '70%', // Set a fixed width
+    margin: '0 auto', // Center the div horizontally
+    padding: '20px',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    position: 'relative', // Add position relative to the div
+    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', // Change the base background color
+    color: theme === 'dark' ? 'grey' : 'black', // Text color
+  };
+  const mainContainerStyle = {
+    textAlign: 'center',
+    padding: '40px',
+    backgroundColor: theme === 'dark' ? 'gray' : 'white', // Change the base background color
+  };
+
+  const buttonStyle = {
+    backgroundColor: theme === 'dark' ? '#ccc' : '#007bff',
+    color: theme === 'dark' ? 'black' : 'white',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    fontSize: '1.2rem',
+    cursor: 'pointer',
+  };
+
   return (
-    <div
-      className="product-details"
-      style={{
-        width: '70%', // Set a fixed width
-        margin: '0 auto', // Center the div horizontally
-        padding: '20px',
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        textAlign: 'center',
-        position: 'relative', // Add position relative to the div
-      }}
-    >
+    <div className="home" style={mainContainerStyle}>
+    <div className="product-details" style={containerStyle}>
       {/* Move the heart button */}
       <FaHeart
         onClick={handleToggleFavorite}
@@ -85,60 +104,27 @@ function ProductDetails() {
       <p>{product.description}</p>
       <div className="quantity-controls" style={{ marginTop: '20px' }}>
         {/* Add increase and decrease buttons here */}
-        <button
-          onClick={decreaseQuantity}
-          style={{
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            padding: '5px 10px',
-            borderRadius: '5px',
-            fontSize: '1.2rem',
-            cursor: 'pointer',
-          }}
-        >
+        <button onClick={decreaseQuantity} style={buttonStyle}>
           -
         </button>
         <span style={{ fontSize: '1.2rem', margin: '0 10px' }}>{quantity}</span>
-        <button
-          onClick={increaseQuantity}
-          style={{
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            padding: '5px 10px',
-            borderRadius: '5px',
-            fontSize: '1.2rem',
-            cursor: 'pointer',
-          }}
-        >
+        <button onClick={increaseQuantity} style={buttonStyle}>
           +
         </button>
       </div>
-      <p className="price" style={{ fontWeight: 'bold', color: '#007bff' }}>
+      <p className="price" style={{ fontWeight: 'bold', color: theme === 'dark' ? 'grey' : '#007bff' }}>
         ${product.price * quantity} {/* Update the price */}
       </p>
-      <button
-        onClick={handleAddToCart}
-        style={{
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          padding: '10px 20px',
-          borderRadius: '5px',
-          fontSize: '1.2rem',
-          cursor: 'pointer',
-          marginTop: '20px',
-        }}
-      >
+      <button onClick={handleAddToCart} style={buttonStyle}>
         Add to Cart
       </button>
     </div>
+    </div>
   );
-  
 }
 
 export default ProductDetails;
+
 
 
 

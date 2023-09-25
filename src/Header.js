@@ -12,7 +12,7 @@ function Header() {
     <header
       style={{
         ...headerStyle,
-        backgroundColor: theme === 'dark' ? '#333' : '#fff',
+        backgroundColor: theme === 'dark' ? 'gray' : '#fff',
         color: theme === 'dark' ? '#fff' : '#000',
       }}
     >
