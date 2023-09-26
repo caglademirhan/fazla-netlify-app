@@ -8,10 +8,10 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage('theme', 'light'); // Store the theme in local storage
+  const [theme, setTheme] = useLocalStorage('theme', 'light'); 
 
   useEffect(() => {
-    // Apply the theme class to the body element
+    
     document.body.classList.toggle('dark-mode', theme === 'dark');
   }, [theme]);
 

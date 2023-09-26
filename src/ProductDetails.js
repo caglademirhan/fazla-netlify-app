@@ -3,14 +3,14 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { useECommerce } from './ECommerceContext';
-import { useTheme } from './ThemeContext'; // Import useTheme from your ThemeContext
+import { useTheme } from './ThemeContext'; 
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { addToCart, addToFavorites, removeFromFavorites, state } = useECommerce(); // Add this line
-  const { theme } = useTheme(); // Get the current theme from ThemeContext
+  const { addToCart, addToFavorites, removeFromFavorites, state } = useECommerce(); 
+  const { theme } = useTheme(); 
 
   useEffect(() => {
     axios
@@ -34,7 +34,7 @@ function ProductDetails() {
   };
 
   const handleAddToCart = () => {
-    addToCart({ ...product, quantity }); // Use the selected quantity
+    addToCart({ ...product, quantity }); 
   };
 
   const handleToggleFavorite = () => {
@@ -54,21 +54,21 @@ function ProductDetails() {
   const isFavorite = state.favorites.some((item) => item.id === product.id);
 
   const containerStyle = {
-    width: '70%', // Set a fixed width
-    margin: '0 auto', // Center the div horizontally
+    width: '70%', 
+    margin: '0 auto', 
     padding: '20px',
     border: '1px solid #ccc',
     borderRadius: '8px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     textAlign: 'center',
-    position: 'relative', // Add position relative to the div
-    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', // Change the base background color
-    color: theme === 'dark' ? 'grey' : 'black', // Text color
+    position: 'relative', 
+    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', 
+    color: theme === 'dark' ? 'grey' : 'black', 
   };
   const mainContainerStyle = {
     textAlign: 'center',
     padding: '40px',
-    backgroundColor: theme === 'dark' ? 'gray' : 'white', // Change the base background color
+    backgroundColor: theme === 'dark' ? 'gray' : 'white', 
   };
 
   const buttonStyle = {
@@ -84,16 +84,16 @@ function ProductDetails() {
   return (
     <div className="home" style={mainContainerStyle}>
     <div className="product-details" style={containerStyle}>
-      {/* Move the heart button */}
+      
       <FaHeart
         onClick={handleToggleFavorite}
         style={{
-          position: 'absolute', // Position the heart button absolutely
-          top: '10px', // Adjust top position as needed
-          right: '10px', // Adjust right position as needed
+          position: 'absolute', 
+          top: '10px', 
+          right: '10px', 
           color: isFavorite ? 'red' : 'gray',
           cursor: 'pointer',
-          fontSize: '24px', // Increase the font size
+          fontSize: '24px', 
         }}
       />
       <span style={{ fontSize: '18px', position: 'absolute', top: '10px', right: '40px' }}>
@@ -103,7 +103,7 @@ function ProductDetails() {
       <img src={product.images[0]} alt={product.title} style={{ width: '300px', height: '300px', objectFit: 'cover' }} />
       <p>{product.description}</p>
       <div className="quantity-controls" style={{ marginTop: '20px' }}>
-        {/* Add increase and decrease buttons here */}
+        
         <button onClick={decreaseQuantity} style={buttonStyle}>
           -
         </button>
@@ -113,7 +113,7 @@ function ProductDetails() {
         </button>
       </div>
       <p className="price" style={{ fontWeight: 'bold', color: theme === 'dark' ? 'grey' : '#007bff' }}>
-        ${product.price * quantity} {/* Update the price */}
+        ${product.price * quantity} 
       </p>
       <button onClick={handleAddToCart} style={buttonStyle}>
         Add to Cart

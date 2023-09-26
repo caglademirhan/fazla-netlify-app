@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
   favorites: [],
-  cart: [], // Include quantity for items in the cart
+  cart: [],
 };
 
 const ECommerceContext = createContext();
@@ -12,7 +12,7 @@ const ACTION_TYPES = {
   REMOVE_FROM_FAVORITES: 'REMOVE_FROM_FAVORITES',
   ADD_TO_CART: 'ADD_TO_CART',
   REMOVE_FROM_CART: 'REMOVE_FROM_CART',
-  UPDATE_CART_ITEM_QUANTITY: 'UPDATE_CART_ITEM_QUANTITY', // New action type
+  UPDATE_CART_ITEM_QUANTITY: 'UPDATE_CART_ITEM_QUANTITY',
 };
 
 const reducer = (state, action) => {
@@ -33,17 +33,24 @@ const reducer = (state, action) => {
       if (existingCartItemIndex !== -1) {
         // If item already exists in cart, update quantity
         const updatedCart = [...state.cart];
-        updatedCart[existingCartItemIndex].quantity += 1;
+        const existingQuantity = updatedCart[existingCartItemIndex].quantity || 1;
+        updatedCart[existingCartItemIndex].quantity = existingQuantity + (action.payload.quantity || 1);
 
         return {
           ...state,
           cart: updatedCart,
         };
       } else {
-        // If item is not in cart, add it with quantity 1
+        // If item is not in cart, add it with the chosen quantity or 1 if quantity is not provided
         return {
           ...state,
-          cart: [...state.cart, { ...action.payload, quantity: 1 }],
+          cart: [
+            ...state.cart,
+            {
+              ...action.payload,
+              quantity: action.payload.quantity || 1,
+            },
+          ],
         };
       }
     case ACTION_TYPES.REMOVE_FROM_CART:
@@ -84,7 +91,6 @@ export function ECommerceProvider({ children }) {
     dispatch({ type: ACTION_TYPES.REMOVE_FROM_CART, payload: product });
   };
 
-  // New function to update item quantity in the cart
   const updateCartItemQuantity = (product) => {
     dispatch({ type: ACTION_TYPES.UPDATE_CART_ITEM_QUANTITY, payload: product });
   };
@@ -97,7 +103,7 @@ export function ECommerceProvider({ children }) {
         removeFromFavorites,
         addToCart,
         removeFromCart,
-        updateCartItemQuantity, // Add the new function to the context value
+        updateCartItemQuantity,
       }}
     >
       {children}
@@ -108,5 +114,9 @@ export function ECommerceProvider({ children }) {
 export function useECommerce() {
   return useContext(ECommerceContext);
 }
+
+
+
+
 
 

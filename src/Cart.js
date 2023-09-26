@@ -29,7 +29,7 @@ function Cart() {
   const containerStyle = {
     textAlign: 'center',
     padding: '20px',
-    backgroundColor: theme === 'dark' ? 'gray' : 'white', // Change the base background color
+    backgroundColor: theme === 'dark' ? 'gray' : 'white', 
   };
 
   const cardStyle = {
@@ -37,16 +37,16 @@ function Cart() {
     padding: '10px',
     margin: '10px',
     width: '250px',
-    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', // Change the card background color
+    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', 
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
-    color: theme === 'dark' ? 'grey' : 'black', // Text color
+    color: theme === 'dark' ? 'grey' : 'black', 
   };
 
   const buttonStyle = {
-    backgroundColor: theme === 'dark' ? 'red' : 'green', // Change button background color
+    backgroundColor: theme === 'dark' ? 'red' : 'green', 
     color: 'white',
     border: 'none',
     padding: '10px',

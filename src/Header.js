@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaHeart, FaShoppingCart, FaStore } from 'react-icons/fa';
 import { FiSun, FiMoon } from 'react-icons/fi';
-import { useTheme } from './ThemeContext'; // Import useTheme
+import { useTheme } from './ThemeContext'; 
 
 function Header() {
-  const { theme, toggleTheme } = useTheme(); // Get theme and toggleTheme from ThemeContext
+  const { theme, toggleTheme } = useTheme(); 
   const location = useLocation();
 
   return (

@@ -6,12 +6,12 @@ import Favorites from './Favorites';
 import Cart from './Cart';
 import ProductDetails from './ProductDetails';
 import { ECommerceProvider } from './ECommerceContext';
-import { ThemeProvider } from './ThemeContext'; // Import the ThemeProvider
+import { ThemeProvider } from './ThemeContext'; 
 
 function App() {
   return (
     <Router>
-      <ThemeProvider> {/* Wrap your entire app with the ThemeProvider */}
+      <ThemeProvider> 
         <ECommerceProvider>
           <Header />
           <Routes>

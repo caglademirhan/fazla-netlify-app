@@ -3,17 +3,17 @@ import axios from 'axios';
 import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useECommerce } from './ECommerceContext';
-import { useTheme } from './ThemeContext'; // Import useTheme from your ThemeContext
+import { useTheme } from './ThemeContext'; 
 
 function Home() {
   const { addToFavorites, removeFromFavorites, addToCart, removeFromCart } = useECommerce();
   const { favorites, cart } = useECommerce().state;
   const [products, setProducts] = useState([]);
 
-  const { theme } = useTheme(); // Get the current theme from ThemeContext
+  const { theme } = useTheme(); 
 
   useEffect(() => {
-    // Fetch data from the API
+    
     axios.get('https://dummyjson.com/products')
       .then((response) => {
         setProducts(response.data.products);
@@ -23,11 +23,11 @@ function Home() {
       });
   }, []);
 
-  // Define your styles based on the current theme
+  
   const containerStyle = {
     textAlign: 'center',
     padding: '20px',
-    backgroundColor: theme === 'dark' ? 'gray' : 'white', // Change the base background color
+    backgroundColor: theme === 'dark' ? 'gray' : 'white',
   };
 
   const cardStyle = {
@@ -35,12 +35,12 @@ function Home() {
     padding: '10px',
     margin: '10px',
     width: '250px',
-    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', // Change the card background color
+    backgroundColor: theme === 'dark' ? '#3D426B' : '#F8B88B', 
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
-    color: theme === 'dark' ? 'grey' : 'black', // Text color
+    color: theme === 'dark' ? 'grey' : 'black', 
   };
 
   return (
@@ -51,7 +51,7 @@ function Home() {
           <div
             className="product-card"
             key={product.id}
-            style={cardStyle} // Apply the cardStyle based on the theme
+            style={cardStyle} 
           >
             <FaHeart
               style={{
