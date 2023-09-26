@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+THIS PROJECT DEPLOYED TO NETLIFY VIA GITHUB REPOSITORY, YOU CAN ACCESS THE DEPLOYED VERSION FROM HERE: (https://fazla-case.netlify.app/)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -27,7 +29,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-THIS APPLICATION DEPLOYED TO NETLIFY, YOU CAN ACCESS THE DEPLOYED VERSION FROM HERE: (https://fazla-case.netlify.app/)
+
 
 
 
